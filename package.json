@@ -1,0 +1,19 @@
+{
+  "name": "postcard_address_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.19.1",
+    "canvas": "^2.8.0",
+    "co-body": "^6.1.0",
+    "date-utils": "^1.2.21",
+    "express": "^4.17.2"
+  }
+}

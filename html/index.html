@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>はがき宛名生成API 仕様書</title>
+    <style>
+        * {margin: 0; padding: 0;}
+        body {
+            padding: 10px;
+            font-family:'Source Sans Pro', sans-serif;
+        }
+        h1, h2, h3 {
+            margin: 10px 0 5px 0;
+        }
+        p {margin: 5px 0;}
+        pre {background-color: #121212; color: #fefefe; width: calc(100% - 20px); padding: 10px; margin: 10px 0; overflow-y: scroll; border-radius: 5px;}
+        ol {padding-left: 20px;}
+        ol li {margin: 5px 0;}
+        ol li a {color: #000;}
+        div.tableWrap {
+            width: 100%;
+            overflow-x: scroll;
+        }
+        table {
+            border-collapse: collapse;
+            border: solid 2px #878787;
+            width: 800px;
+        }
+        table th,
+        table td {
+            border: solid 1px #878787;
+            padding: 5px;
+        }
+        table th {background-color: #cecece; border-bottom: 2px solid #878787;}
+        table tr:nth-of-type(odd) {background-color: #eaeaea;}
+        table td.tableMainData {background-color: #fff;}
+    </style>
+</head>
+<body>
+    <header><h1>はがき宛名生成API 仕様書</h1></header>
+    <main>
+        <section>
+            <p>目次</p>
+            <ol>
+                <li><a href="#aboutapi">APIについて</a></li>
+                <li><a href="#postSpecification">POST仕様</a></li>
+                <ol>
+                    <li><a href="#specification">仕様</a></li>
+                    <li><a href="#key">キー内容</a></li>
+                    <li><a href="#option">optionについて</a></li>
+                    <ol>
+                        <li><a href="#o_dash">dash</a></li>
+                    </ol>
+                </ol>
+                <li><a href="#response">レスポンス</a></li>
+                <li><a href="#other">その他</a></li>
+            </ol>
+            
+            
+            
+        </section>
+        <section id="aboutapi">
+            <h2>APIについて</h2>
+            <p>本APIは<a href="https://postcard.saladbowl.work" target="_blank" rel="noopener noreferrer">年賀状宛名ジェネレーター</a>と同じシステムを使用したAPIです。</p>
+        </section>
+        <section id="postSpecification">
+            <h2 id="specification">仕様</h2>
+            <p>potapi.rkwt.me/v1/にJSON形式でPOSTすることでBase64のデータを返却します。</p>
+            <p>例</p>
+            <pre>
+                <code>
+curl -X POST -H "Content-Type: application/json" -d '{"to" :{"postCode":"1234567","addr":"東京都中野区目黒町1-4-50","lastName": "田中","firstNames":["一郎","次郎"],"honorificTitle" : "様"},"from" : {"postCode" : "3456789","addr":"大阪府大阪市伏見2-202-10","lastName":"池田","firstNames":["一二三","三郎"]}}' potapi.rkwt.me</code>
+            </pre>
+            <p>POSTするJsonは以下の構成でできています</p>
+            <pre>
+                <code>
+{
+    "to" : {
+        "postCode" : "1234567",
+        "addr" : "東京都中野区目黒町1-4-50",
+        "lastName" : "田中",
+        "firstNames" : ["一郎","次郎"],
+        "honorificTitle" : "様"
+    },
+    "from" : {
+        "postCode" : "3456789",
+        "addr" : "大阪府大阪市伏見2-202-10",
+        "lastName" : "池田",
+        "firstNames" : ["一二三","三郎"]
+    },
+    "option" : {
+        "dash" : "2212"
+    }
+}</code>
+            </pre>
+            <h2 id="key">キー内容</h2>
+            <div class="tableWrap">
+                <table>
+                    <tr>
+                        <th>全体キー名</th>
+                        <th>キー名</th>
+                        <th>形式</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td class="tableMainData" rowspan="5">to</td>
+                        <td>postCode</td>
+                        <td>String</td>
+                        <td>送り先の郵便番号です。</td>
+                    </tr>
+                    <tr>
+                        <td>addr</td>
+                        <td>String</td>
+                        <td>送り先の住所です。</td>
+                    </tr>
+                    <tr>
+                        <td>lastName</td>
+                        <td>String</td>
+                        <td>送り先の苗字です。</td>
+                    </tr>
+                    <tr>
+                        <td>firstNames</td>
+                        <td>Array</td>
+                        <td>送り先の名前です。</td>
+                    </tr>
+                    <tr>
+                        <td>honorificTitle</td>
+                        <td>String</td>
+                        <td>送り先の敬称です。</td>
+                    </tr>
+                    <tr>
+                        <td class="tableMainData" rowspan="4">from</td>
+                        <td>postCode</td>
+                        <td>String</td>
+                        <td>差出人の郵便番号です。</td>
+                    </tr>
+                    <tr>
+                        <td>addr</td>
+                        <td>String</td>
+                        <td>差出人の住所です。</td>
+                    </tr>
+                    <tr>
+                        <td>lastName</td>
+                        <td>String</td>
+                        <td>差出人の苗字です。</td>
+                    </tr>
+                    <tr>
+                        <td>firstNames</td>
+                        <td>Array</td>
+                        <td>差出人の名前です。</td>
+                    </tr>
+                    <tr>
+                        <td class="tableMainData">option</td>
+                        <td>dash</td>
+                        <td>String</td>
+                        <td>ダッシュの記号を統一する際の記号です。(詳細はoptionについてを参照)</td>
+                    </tr>
+                </table>
+
+                <h2 id="option">optionについて</h2>
+                <p>オプションは指定しない場合記述がなくて大丈夫です。詳細な設定をしたい方向けです。</p>
+                <h3 id="o_dash">dash</h3>
+                <p>dashは以下の三種類から選べます。デフォルトは全角マイナス(2212)です</p>
+                <div class="tableWrap">
+                    <table>
+                        <tr>
+                            <th>value</th>
+                            <th>出力値</th>
+                            <th>説明</th>
+                        </tr>
+                        <tr>
+                            <td>30FC</td>
+                            <td>ー</td>
+                            <td>全角長音 U+30FC</td>
+                        </tr>
+                        <tr>
+                            <td>2212</td>
+                            <td>−</td>
+                            <td>全角マイナス U+2212</td>
+                        </tr>
+                        <tr>
+                            <td>2503</td>
+                            <td>―</td>
+                            <td>罫線 U+2503</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2 id="response">response</h2>
+            <p>レスポンスはJson形式です。以下の内容が返却されます。</p>
+            <pre>
+                <code>
+{
+    "type":"png",
+    "data":"data:image/png;base64,iVBORw~"
+    "base64":"iVBORw~"
+} </code>
+            </pre>
+            <div class="tableWrap">
+                <table>
+                    <tr>
+                        <th>キー名</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>pngのみ。</td>
+                    </tr>
+                    <tr>
+                        <td>data</td>
+                        <td>canvas.toDataURL();の実行結果と同様の形式が返却されます。</td>
+                    </tr>
+                    <tr>
+                        <td>base64</td>
+                        <td>base64形式の画像データが返却されます。</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <section>
+            <h2 id="other">その他</h2>
+            <p>バグ等ありましたらsaladbowl_devまで</p>
+        </section>
+    </main>
+</body>
+</html>
