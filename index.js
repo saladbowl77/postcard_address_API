@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const port = 8080
+const port = 5000
 const mkImg   = require('./mkImg.js');
 var fs = require('fs');
 
