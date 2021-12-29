@@ -43,9 +43,13 @@ function rotateCanvas(_ctx, degree, x_offset, y_offset) {
 
 // 画像生成
 exports.func = function(jsonData) {
+    var debugX = 0;
     if("option" in jsonData){
         if("debugmode" in jsonData["option"]){
-            DEBUG_MODE = true;
+            DEBUG_MODE = jsonData["option"]["debugmode"];
+        }
+        if("debugNumX" in jsonData["option"]){
+            debugX = jsonData["option"]["debugNumX"]
         }
     }
     console.log(jsonData)
@@ -150,7 +154,7 @@ exports.func = function(jsonData) {
                         x -
                         (standardW + lineSpacingX) * (addrWL + 1) +
                         (standardW - outputTxtW) / 2 +
-                        outputTxtW / 2;
+                        outputTxtW / 2 + debugX;
 
                     const rotateCenterY = addrH + outputTxtW / 2;
 
