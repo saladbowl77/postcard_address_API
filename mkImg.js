@@ -154,7 +154,7 @@ exports.func = function(jsonData) {
                         x -
                         (standardW + lineSpacingX) * (addrWL + 1) +
                         (standardW - outputTxtW) / 2 +
-                        outputTxtW / 2 + debugX;
+                        outputTxtW / 2  - (fontSize / 10) + debugX;
 
                     const rotateCenterY = addrH + outputTxtW / 2;
 
