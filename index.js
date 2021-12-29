@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
         res.end();
     })
 });
-app.post('/v1/', (req, res) => {
+app.post('/api/v1/', (req, res) => {
     console.log(req.method, req.url);
     var result = mkImg.func(req.body);
     res.json({
@@ -26,7 +26,7 @@ app.post('/v1/', (req, res) => {
         "base64" : result.split(',')[1]
     })
 });
-app.post('/v1/test/', (req, res) => {
+app.post('/api/v1/test/', (req, res) => {
     console.log(req.method, req.url);
     var result = mkImg.func(req.body);
     res.send(`<img src="${result}">`)
