@@ -20,11 +20,20 @@ app.get('/', (req, res) => {
 app.post('/api/v1/', (req, res) => {
     console.log(req.method, req.url);
     var result = mkImg.func(req.body);
-    res.json({
-        "type" : "png",
-        "data" : result,
-        "base64" : result.split(',')[1]
-    })
+    const jsonData = req.body;
+    if("option" in jsonData){
+        if("onlyBase64" in jsonData["option"]){
+            res.send(result.split(',')[1])
+        } else if("onlyData" in jsonData["option"]){
+            res.send(result)
+        }
+    } else {
+        res.json({
+            "type" : "png",
+            "data" : result,
+            "base64" : result.split(',')[1]
+        })
+    }
 });
 app.post('/api/v1/test/', (req, res) => {
     console.log(req.method, req.url);
